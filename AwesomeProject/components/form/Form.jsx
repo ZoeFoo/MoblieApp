@@ -8,22 +8,17 @@ import { base } from '../../assets/styles/main';
 
 import api from '../../services';
 
-const Form = () => {
+const Form = ({ navigation }) => {
     const [selectValue, setSelectValue] = useState('');
     const [nullValue, setNullValue] = useState(false);
 
-    const { control, handleSubmit, formState: { errors } } = useForm({
+    const { control, handleSubmit } = useForm({
         defaultValues: {
             busStop: '',
         }
     });
-    const onSubmit = data => {
-        if (selectValue == '') {
-            setNullValue(!nullValue)
-        }
-
-        data.busStop = selectValue;
-        console.log(data.busStop)
+    const onSubmit = () => {
+        navigation.navigate('BusStop', { busStop: selectValue });
     };
 
     return (
@@ -46,7 +41,9 @@ const Form = () => {
                 }
             </View>
 
-            <Button title="Submit" onPress={handleSubmit(onSubmit)} />
+            <Button title="Submit"
+                disabled={!selectValue}
+                onPress={handleSubmit(onSubmit)} />
         </View>
     );
 };
