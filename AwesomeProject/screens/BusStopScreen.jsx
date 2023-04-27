@@ -6,7 +6,7 @@ import Loading from "../components/Loading";
 
 import api from '../services';
 
-export default function BusStopScreen({ navigation }) {
+export default function BusStopScreen({ navigation, route }) {
     //const selectData = (route.params ?? {})['selectData'];
     const selectData = 'BFA3460955AC820C';
 
@@ -29,7 +29,7 @@ export default function BusStopScreen({ navigation }) {
     const [stopETAData, setStopETAData] = useState('');
     const [isLoading, setIsLoading] = useState(true);
 
-    console.log(stopDetail.data.name_tc )
+    //console.log(stopDetail.data.name_tc )
 
     if (isLoading) {
         return (
