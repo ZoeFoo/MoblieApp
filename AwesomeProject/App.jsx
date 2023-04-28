@@ -14,7 +14,6 @@ function App() {
                 <Stack.Navigator>
                     <Stack.Screen name="Home"
                         component={HomeScreen}
-                        options={{ title: 'Welcome' }}
                     />
 
                     <Stack.Screen name="BusStop"
