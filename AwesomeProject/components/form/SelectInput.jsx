@@ -5,21 +5,20 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import api from '../../services';
 
-const SelectInput = ({ selectValue, setSelectValue, setNullValue }) => {
+const SelectInput = ({ selectValue, setSelectValue }) => {
     return (
         <Select
             selectedValue={selectValue}
             minWidth="200"
-            placeholder="Please Choose Bus Stop"
+            placeholder="請選擇查詢的巴士站"
             _selectedItem={{
                 endIcon: <CheckIcon size="5" />
             }}
-            onValueChange={itemValue => {
-                setSelectValue(itemValue)
-                setNullValue(false)
+            onValueChange={(itemValue) => {
+                setSelectValue(itemValue);
             }}>
-            <Select.Item label="TSUEN KING CIRCUIT FLYOVER" value="BFA3460955AC820C" />
-            <Select.Item label="CHAI WAN KOK STREET TSUEN WAN" value="5FB1FCAF80F3D97D" />
+            <Select.Item label="荃景圍天橋" value="BFA3460955AC820C" />
+            <Select.Item label="荃灣柴灣角街" value="5FB1FCAF80F3D97D" />
         </Select>
     )
 };

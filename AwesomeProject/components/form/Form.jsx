@@ -4,13 +4,9 @@ import { FormControl, WarningOutlineIcon } from "native-base";
 import { useForm, Controller } from "react-hook-form";
 
 import SelectInput from "./SelectInput";
-import { base } from '../../assets/styles/main';
-
-import api from '../../services';
 
 const Form = ({ navigation }) => {
     const [selectValue, setSelectValue] = useState('');
-    const [nullValue, setNullValue] = useState(false);
 
     const { control, handleSubmit } = useForm({
         defaultValues: {
@@ -18,27 +14,23 @@ const Form = ({ navigation }) => {
         }
     });
     const onSubmit = () => {
-        navigation.navigate('BusStop', { busStop: selectValue });
+        navigation.navigate('BusStop', { selectData: selectValue });
     };
 
     return (
         <View>
             <View style={styles.container}>
-                <Text>Bus Stop</Text>
+                <Text style={styles.text }>巴士站</Text>
                 <Controller
                     control={control}
                     render={({ field: { onChange, onBlur, value } }) => (
                         <SelectInput
                             selectValue={selectValue}
                             setSelectValue={setSelectValue}
-                            setNullValue={setNullValue}
                         />
                     )}
                     name="busStop"
                 />
-                {nullValue &&
-                    <Text style={styles.warn}>Please make a selection!</Text>
-                }
             </View>
 
             <Button title="Submit"
@@ -51,13 +43,9 @@ const Form = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 0.5,
-        //borderWidth: 1,
-        //borderColor: 'green'
     },
-    warn: {
-        //borderWidth: 1,
-        //borderColor: 'red',
-        color: `${base.danger}`,
+    text: {
+        margin: '2%'
     }
 })
 
