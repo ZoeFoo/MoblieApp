@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import Loading from "../components/Loading";
+import BusToStopETAItem from '../components/bus/BusToStopETAItem';
 
 import api from '../services';
 
@@ -10,51 +11,44 @@ export default function BusStopScreen({ navigation, route }) {
     //const selectData = (route.params ?? {})['selectData'];
     const selectData = 'BFA3460955AC820C';
 
+    const [stopDetail, setStopDetail] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
+
     useEffect(() => {
         (async () => {
-            const busDetail = await api.getBusStopDetail(selectData);
-            await setStopDetail(busDetail)
-            //console.log({ busDetail })
+            const data = await api.getBusStopDetail(selectData);
 
-            const data = await api.getBusStopETA(selectData);
-            const etaData = data.data;
-            const todayETAData = await etaData.filter(({ eta }) => eta !== null);
-            await setStopETAData(todayETAData);
-            //console.log({ todayETAData })
+            setStopDetail(data.data);
             setIsLoading(false);
         })()
     }, []);
 
-    const [stopDetail, setStopDetail] = useState('');
-    const [stopETAData, setStopETAData] = useState('');
-    const [isLoading, setIsLoading] = useState(true);
-
-    //console.log(stopDetail.data.name_tc )
-
-    if (isLoading) {
-        return (
-            <View style={styles.loadingContainer}>
-                <Loading />
-            </View>
-        );
-    }
+    if (isLoading) return null;
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.text}>
-                {stopDetail.data.name_tc}
-            </Text>
-        </View>
+        <ScrollView style={styles.container}>
+            <View style={styles.container}>
+                <Text style={styles.text}>
+                    {stopDetail.name_tc}
+                </Text>
+
+                <View style={styles.itemContainer}>
+                    <BusToStopETAItem
+                        stopName={stopDetail.name_tc}
+                        whichStop={selectData}
+                    />
+                </View>
+            </View>
+        </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: 'white',
     },
-    loadingContainer: {
-        flex: 1,
-        borderWidth: 1,
-        borderColor: 'blue',
+    itemContainer: {
+        backgroundColor: 'white',
     }
 });
