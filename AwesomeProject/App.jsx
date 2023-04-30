@@ -13,7 +13,8 @@ function App() {
             <NavigationContainer>
                 <Stack.Navigator>
                     <Stack.Screen name="Home"
-                        component={HomeScreen} />
+                        component={HomeScreen}
+                    />
 
                     <Stack.Screen name="BusStop"
                         component={BusStopScreen} />
