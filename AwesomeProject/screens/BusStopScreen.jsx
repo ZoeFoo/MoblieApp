@@ -33,6 +33,10 @@ export default function BusStopScreen({ navigation, route }) {
                     {stopDetail.name_tc}
                 </Text>
 
+                <View style={{ height: 300 }}>
+                    <Map />
+                </View>
+
                 <View style={styles.itemContainer}>
                     <BusToStopETAItem
                         stopName={stopDetail.name_tc}
