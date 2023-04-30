@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 
@@ -6,8 +7,9 @@ import Loading from "../Loading";
 import api from '../../services';
 
 const BusToStopETAItem = ({ stopName, whichStop }) => {
+    const now = moment(new Date());
     const [isLoading, setIsLoading] = useState(true);
-    const [stopETAData, setStopETAData] = useState('');
+    const [stopETAData, setStopETAData] = useState(null);
 
     useEffect(() => {
         (async () => {
@@ -22,18 +24,28 @@ const BusToStopETAItem = ({ stopName, whichStop }) => {
 
     return (
         <View>
-            {stopETAData ?
-                stopETAData.map(({ route, dest_tc, rmk_tc, eta }, i) => (
-                    <Item key={i}
-                        stopName={stopName}
-                        routeNum={route}
-                        destName={dest_tc}
-                        rmk={rmk_tc}
-                        eta={eta}
-                    />
-                )) : <View style={styles.loadingContainer}>
-                    <Loading />
-                </View>
+            {
+                stopETAData ?
+                    stopETAData.map(({ route, dest_tc, rmk_tc, eta }, i) => {
+                        const etaMinutes = eta == null ?
+                            null :
+                            moment.duration(now.diff(moment(eta))).asMinutes();
+
+                        return (
+                            <Item key={i}
+                                stopName={stopName}
+                                routeNum={route}
+                                destName={dest_tc}
+                                rmk={rmk_tc}
+                                eta={Math.ceil(Math.abs(etaMinutes))}
+                            />
+                        );
+                    }) :
+                    (
+                        <View style={styles.loadingContainer}>
+                            <Loading />
+                        </View>
+                    )
             }
         </View>
     )
@@ -62,14 +74,22 @@ const Item = ({ stopName, routeNum, destName, rmk, eta }) => {
                     </Text>
                 </View>
 
-                <Text>{rmk }</Text>
+                <Text>{rmk}</Text>
             </View>
 
             <View style={styles.etaContainer}>
-                <Text style={styles.etaText}>
-                    {eta }
-                </Text>
-                <Text>分鐘</Text>
+                {
+                    eta && (
+                        <View>
+                            <Text style={styles.etaText}>
+                                {eta}
+                            </Text>
+                            <Text>分鐘</Text>
+                        </View>
+                    ) || (
+                        <Text>--</Text>
+                    )
+                }
             </View>
         </View>
 
@@ -86,7 +106,6 @@ const styles = StyleSheet.create({
         height: 100,
     },
     loadingContainer: {
-
     },
     routeNumContainer: {
         borderWidth: 1,
