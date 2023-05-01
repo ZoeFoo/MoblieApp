@@ -17,8 +17,12 @@ const Form = ({ navigation }) => {
             busStop: '',
         }
     });
-    const onSubmit = () => {
-        navigation.navigate('BusStop', { busStop: selectValue });
+    const onSubmit = async () => {
+        const stopName = await api.getBusStopDetail(`${selectValue}`);
+        navigation.navigate('BusStop', {
+            stopName: stopName.data.name_tc,
+            busStop: selectValue
+        });
     };
 
     return (
