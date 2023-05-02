@@ -96,12 +96,26 @@ const Item = ({ navigation, stopName, routeNum, routes }) => {
         }
     }
 
+    const destResult = route.dest_tc.split("(");
+    let destination;
+
+    if (destResult.length == 1) {
+        destination = destResult[0];
+    } else if (destResult[1] == '循環線)') {
+        destination = route.dest_tc;
+    } else {
+        const result = destResult[1].substring(0, destResult[1].length - 1);
+        destination = `${result}總站`
+    }
+
     return (
         <TouchableOpacity
             onPress={() => {
                 navigation.navigate('RouteDetail', {
-                    routeNum: routeNum
-            }) }}
+                    routeNum: routeNum,
+                    destination: destination
+                })
+            }}
             style={styles.container}>
             <View style={styles.routeNumContainer}>
                 <Text style={styles.routeNumText}>
