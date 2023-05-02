@@ -18,7 +18,6 @@ function App() {
 
                     <Stack.Screen name="BusStop"
                         component={BusStopScreen}
-                        options={{ title: 'test' }}
                     />
                 </Stack.Navigator>
             </NavigationContainer>
