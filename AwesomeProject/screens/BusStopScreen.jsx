@@ -13,6 +13,7 @@ export default function BusStopScreen({ navigation, route }) {
         <ScrollView style={styles.container}>
             <View style={styles.itemContainer}>
                 <BusToStopETAItem
+                    navigation={navigation}
                     stopName={stopName}
                     whichStop={busStop}
                 />
