@@ -9,7 +9,7 @@ import Loading from "../Loading";
 import api from '../../services';
 
 const BusToStopETAItem = ({ stopName, whichStop }) => {
-    const now = moment(new Date());
+    /*const now = moment(new Date());*/
     const [isLoading, setIsLoading] = useState(true);
     const [stopETAData, setStopETAData] = useState({});
 
@@ -53,9 +53,15 @@ const BusToStopETAItem = ({ stopName, whichStop }) => {
 };
 
 const Item = ({ stopName, routeNum, routes }) => {
+    const now = moment(new Date());
     const route = routes[0];
     if (!route) return null;
-    console.log(route)
+
+    const etaMinutes = (eta) => {
+        const min = moment.duration(now.diff(moment(eta))).asMinutes();
+        return Math.ceil(Math.abs(min))
+
+    }
 
     const isETA = () => {
         switch (true) {
@@ -66,7 +72,7 @@ const Item = ({ stopName, routeNum, routes }) => {
                             <FontAwesomeIcon
                                 icon={faCircleExclamation}
                                 color={'#005eb2'}
-                                size={32}/>
+                                size={32} />
                         </Text>
                     </View>
                 )
@@ -75,7 +81,7 @@ const Item = ({ stopName, routeNum, routes }) => {
                 return (
                     <View>
                         <Text style={styles.etaText}>
-                            {/*{route.eta}*/}
+                            {etaMinutes(route.eta)}
                         </Text>
                         <Text style={styles.minText}>分鐘</Text>
                     </View>
