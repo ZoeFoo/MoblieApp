@@ -1,11 +1,23 @@
 import React from "react";
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, RefreshControl } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function RouteDetailScreen({ navigation }) {
+    const [refreshing, setRefreshing] = React.useState(false);
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        setTimeout(() => {
+            setRefreshing(false);
+        }, 1000);
+    }, []);
     return (
         <SafeAreaView style={styles.container}>
-            <Text>RouteDetailScreen</Text>
+            <ScrollView refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }>
+                <Text>RouteDetailScreen</Text>
+            </ScrollView>
         </SafeAreaView>
     )
 };
