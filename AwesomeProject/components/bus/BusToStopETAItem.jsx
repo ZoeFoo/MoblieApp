@@ -8,7 +8,7 @@ import Loading from "../Loading";
 
 import api from '../../services';
 
-const BusToStopETAItem = ({ stopName, whichStop }) => {
+const BusToStopETAItem = ({ navigation, stopName, whichStop }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [stopETAData, setStopETAData] = useState({});
 
@@ -37,6 +37,7 @@ const BusToStopETAItem = ({ stopName, whichStop }) => {
 
                     return (
                         <Item key={i}
+                            navigation={navigation}
                             stopName={stopName}
                             routeNum={key}
                             routes={routes}
@@ -50,7 +51,7 @@ const BusToStopETAItem = ({ stopName, whichStop }) => {
     )
 };
 
-const Item = ({ stopName, routeNum, routes }) => {
+const Item = ({ navigation, stopName, routeNum, routes }) => {
     const now = moment(new Date());
     const route = routes[0];
     if (!route) return null;
@@ -97,7 +98,9 @@ const Item = ({ stopName, routeNum, routes }) => {
     }
 
     return (
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity
+            onPress={() => { navigation.navigate('RouteDetail') }}
+            style={styles.container}>
             <View style={styles.routeNumContainer}>
                 <Text style={styles.routeNumText}>
                     {routeNum}
