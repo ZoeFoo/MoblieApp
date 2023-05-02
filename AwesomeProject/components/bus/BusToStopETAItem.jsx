@@ -1,6 +1,8 @@
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons/faCircleExclamation'
 
 import Loading from "../Loading";
 
@@ -14,8 +16,8 @@ const BusToStopETAItem = ({ stopName, whichStop }) => {
     useEffect(() => {
         (async () => {
             const data = await api.getBusStopETA(`${whichStop}`);
-            console.log(data)
             const etaData = await data.data;
+            //console.log(etaData)
 
             setStopETAData(etaData);
             setIsLoading(false);
@@ -27,6 +29,9 @@ const BusToStopETAItem = ({ stopName, whichStop }) => {
             {
                 stopETAData ?
                     stopETAData.map(({ route, dest_tc, rmk_tc, eta }, i) => {
+                        //console.log({ route});
+                        
+
                         const etaMinutes = eta == null ?
                             null :
                             moment.duration(now.diff(moment(eta))).asMinutes();
@@ -52,6 +57,36 @@ const BusToStopETAItem = ({ stopName, whichStop }) => {
 };
 
 const Item = ({ stopName, routeNum, destName, rmk, eta }) => {
+    const isETA = () => {
+        switch (true) {
+            case (rmk == '服務只限於星期日及公眾假期' && eta == 0):
+                return (<View>
+                    <FontAwesomeIcon icon={faCircleExclamation} />
+                    <Text>服務只限於星期日及公眾假期</Text>
+                </View>
+                )
+                break;
+            case (eta > 0):
+                return (
+                    <View>
+                        <Text style={styles.etaText}>
+                            {eta}
+                        </Text>
+                        <Text>分鐘</Text>
+                    </View>
+                )
+                break;
+            default:
+                return (
+                    <View>
+                        <Text>--</Text>
+                        <Text>分鐘</Text>
+                    </View>
+                )
+                break;
+        }
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.routeNumContainer}>
@@ -62,7 +97,7 @@ const Item = ({ stopName, routeNum, destName, rmk, eta }) => {
 
             <View style={styles.routeDetailContainer}>
                 <View style={styles.origContainer}>
-                    <Text>往</Text>
+                    <Text style={{ textAlignVertical: 'bottom' }}>往</Text>
                     <Text style={styles.origText}>
                         {destName}
                     </Text>
@@ -73,23 +108,10 @@ const Item = ({ stopName, routeNum, destName, rmk, eta }) => {
                         {stopName}
                     </Text>
                 </View>
-
-                <Text>{rmk}</Text>
             </View>
 
             <View style={styles.etaContainer}>
-                {
-                    eta && (
-                        <View>
-                            <Text style={styles.etaText}>
-                                {eta}
-                            </Text>
-                            <Text>分鐘</Text>
-                        </View>
-                    ) || (
-                        <Text>--</Text>
-                    )
-                }
+                {isETA()}
             </View>
         </View>
 
@@ -111,17 +133,35 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'green',
         width: '20%',
+        justifyContent: 'center',
+
     },
-    routeNumText: {},
+    routeNumText: {
+        height: '30%',
+        fontSize: 25,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
     routeDetailContainer: {
         borderWidth: 1,
         borderColor: 'green',
         width: '60%',
+        justifyContent: 'center',
     },
-    origContainer: {},
-    origText: {},
+    origContainer: {
+        borderWidth: 1,
+        borderColor: 'blue',
+        flexDirection: 'row',
+    },
+    origText: {
+        fontSize: 25,
+        fontWeight: 'bold'
+    },
     stopContainer: {},
-    stopText: {},
+    stopText: {
+        fontSize: 15,
+        fontWeight: 'bold',
+    },
     etaContainer: {
         borderWidth: 1,
         borderColor: 'green',
