@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons/faCircleExclamation'
 
@@ -9,7 +9,6 @@ import Loading from "../Loading";
 import api from '../../services';
 
 const BusToStopETAItem = ({ stopName, whichStop }) => {
-    /*const now = moment(new Date());*/
     const [isLoading, setIsLoading] = useState(true);
     const [stopETAData, setStopETAData] = useState({});
 
@@ -17,7 +16,6 @@ const BusToStopETAItem = ({ stopName, whichStop }) => {
         (async () => {
             const data = await api.getBusStopETA(`${whichStop}`);
             const etaData = await data.data;
-            //console.log(etaData)
 
             const groupByRoute = await etaData.reduce((group, routes) => {
                 const { route } = routes;
@@ -99,7 +97,7 @@ const Item = ({ stopName, routeNum, routes }) => {
     }
 
     return (
-        <View style={styles.container}>
+        <TouchableOpacity style={styles.container}>
             <View style={styles.routeNumContainer}>
                 <Text style={styles.routeNumText}>
                     {routeNum}
@@ -124,7 +122,7 @@ const Item = ({ stopName, routeNum, routes }) => {
             <View style={styles.etaContainer}>
                 {isETA()}
             </View>
-        </View>
+        </TouchableOpacity>
 
     )
 }
