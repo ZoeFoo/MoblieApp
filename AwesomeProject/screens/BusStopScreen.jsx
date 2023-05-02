@@ -3,7 +3,6 @@ import { StyleSheet, View, ScrollView, RefreshControl } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import BusToStopETAItem from '../components/bus/BusToStopETAItem';
-import Map from "../components/Map";
 
 export default function BusStopScreen({ navigation, route }) {
     //console.log({ route })

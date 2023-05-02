@@ -2,6 +2,8 @@ import React from "react";
 import { StyleSheet, View, Text, ScrollView, RefreshControl } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import Map from "../components/Map";
+
 export default function RouteDetailScreen({ navigation }) {
     const [refreshing, setRefreshing] = React.useState(false);
 
@@ -16,7 +18,9 @@ export default function RouteDetailScreen({ navigation }) {
             <ScrollView refreshControl={
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }>
-                <Text>RouteDetailScreen</Text>
+                <View style={{ height: 300 }}>
+                    <Map />
+                </View>
             </ScrollView>
         </SafeAreaView>
     )

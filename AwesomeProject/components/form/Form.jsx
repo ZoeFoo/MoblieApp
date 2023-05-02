@@ -5,6 +5,8 @@ import { useForm, Controller } from "react-hook-form";
 
 import SelectInput from "./SelectInput";
 
+import api from '../../services';
+
 const Form = ({ navigation }) => {
     const [selectValue, setSelectValue] = useState('');
 

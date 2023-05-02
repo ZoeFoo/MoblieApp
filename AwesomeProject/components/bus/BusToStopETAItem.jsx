@@ -10,7 +10,7 @@ import api from '../../services';
 
 const BusToStopETAItem = ({ navigation, stopName, whichStop }) => {
     const [isLoading, setIsLoading] = useState(true);
-    const [stopETAData, setStopETAData] = useState({});
+    const [stopETAData, setStopETAData] = useState(null);
 
     useEffect(() => {
         (async () => {
@@ -25,7 +25,7 @@ const BusToStopETAItem = ({ navigation, stopName, whichStop }) => {
             }, {});
 
             setStopETAData(groupByRoute);
-            setIsLoading(false);
+            //setIsLoading(false);
         })()
     }, []);
 
@@ -43,7 +43,7 @@ const BusToStopETAItem = ({ navigation, stopName, whichStop }) => {
                             routes={routes}
                         />
                     )
-                }) : (<View style={styles.loadingContainer}>
+                }) : (<View>
                     <Loading />
                 </View>)
             }
@@ -59,7 +59,6 @@ const Item = ({ navigation, stopName, routeNum, routes }) => {
     const etaMinutes = (eta) => {
         const min = moment.duration(now.diff(moment(eta))).asMinutes();
         return Math.ceil(Math.abs(min))
-
     }
 
     const isETA = () => {
@@ -99,7 +98,10 @@ const Item = ({ navigation, stopName, routeNum, routes }) => {
 
     return (
         <TouchableOpacity
-            onPress={() => { navigation.navigate('RouteDetail') }}
+            onPress={() => {
+                navigation.navigate('RouteDetail', {
+                    routeNum: routeNum
+            }) }}
             style={styles.container}>
             <View style={styles.routeNumContainer}>
                 <Text style={styles.routeNumText}>
