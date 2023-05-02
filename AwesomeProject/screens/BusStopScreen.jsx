@@ -5,7 +5,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import BusToStopETAItem from '../components/bus/BusToStopETAItem';
 
 export default function BusStopScreen({ navigation, route }) {
-    //console.log({ route })
     const [refreshing, setRefreshing] = React.useState(false);
     const stopName = (route.params ?? {})['stopName'];
     const busStop = (route.params ?? {})['busStop'];

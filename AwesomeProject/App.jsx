@@ -15,14 +15,44 @@ function App() {
                 <Stack.Navigator>
                     <Stack.Screen name="Home"
                         component={HomeScreen}
+                        options={{
+                            headerStyle: {
+                                backgroundColor: '#005eb2',
+                            },
+                            headerTintColor: '#fff',
+                            headerTitleStyle: {
+                                fontSize: 25,
+                                fontWeight: 'bold',
+                            },
+                        }}
                     />
 
                     <Stack.Screen name="BusStop"
                         component={BusStopScreen}
+                        options={{
+                            headerStyle: {
+                                backgroundColor: '#005eb2',
+                            },
+                            headerTintColor: '#fff',
+                            headerTitleStyle: {
+                                fontSize: 25,
+                                fontWeight: 'bold',
+                            },
+                        }}
                     />
 
                     <Stack.Screen name="RouteDetail"
                         component={RouteDetailScreen}
+                        options={{
+                            headerStyle: {
+                                backgroundColor: '#005eb2',
+                            },
+                            headerTintColor: '#fff',
+                            headerTitleStyle: {
+                                fontSize: 20,
+                                fontWeight: 'bold',
+                            },
+                        }}
                     />
                 </Stack.Navigator>
             </NavigationContainer>
