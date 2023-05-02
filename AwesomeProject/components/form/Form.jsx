@@ -4,9 +4,6 @@ import { FormControl, WarningOutlineIcon } from "native-base";
 import { useForm, Controller } from "react-hook-form";
 
 import SelectInput from "./SelectInput";
-import { base } from '../../assets/styles/main';
-
-import api from '../../services';
 
 const Form = ({ navigation }) => {
     const [selectValue, setSelectValue] = useState('');
@@ -68,13 +65,9 @@ const Form = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 0.5,
-        //borderWidth: 1,
-        //borderColor: 'green'
     },
-    warn: {
-        //borderWidth: 1,
-        //borderColor: 'red',
-        color: `${base.danger}`,
+    text: {
+        margin: '2%'
     }
 })
 

@@ -2,8 +2,6 @@ import React from 'react';
 import { StyleSheet, View, Image } from 'react-native';
 import loadingImg from '../public/loading.gif';
 
-import {base} from '../assets/styles/main';
-
 const Loading = () => {
     return (
         <View style={styles.container }>
@@ -18,7 +16,7 @@ const Loading = () => {
 const styles = StyleSheet.create({
     container: {
         flex:1,
-        backgroundColor: `${base.loadingBackground}`,
+        backgroundColor: 'white',
     },
     imageStyle: {
         width: 450,
