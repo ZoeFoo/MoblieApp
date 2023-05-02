@@ -8,7 +8,7 @@ export default function RouteDetailScreen({ navigation, route }) {
     console.log({ route })
     const routeNum = (route.params ?? {})['routeNum'];
     const destination = (route.params ?? {})['destination'];
-    navigation.setOptions({ title: `${routeNum} Íù ${destination}`})
+    navigation.setOptions({ title: `${routeNum} å¾€ ${destination}`})
     const [refreshing, setRefreshing] = React.useState(false);
 
     const onRefresh = React.useCallback(() => {
