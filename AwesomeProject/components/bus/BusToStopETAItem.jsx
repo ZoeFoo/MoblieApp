@@ -30,7 +30,7 @@ const BusToStopETAItem = ({ stopName, whichStop }) => {
                 stopETAData ?
                     stopETAData.map(({ route, dest_tc, rmk_tc, eta }, i) => {
                         //console.log({ route});
-                        
+
 
                         const etaMinutes = eta == null ?
                             null :
@@ -47,7 +47,7 @@ const BusToStopETAItem = ({ stopName, whichStop }) => {
                         );
                     }) :
                     (
-                        <View style={styles.loadingContainer}>
+                        <View>
                             <Loading />
                         </View>
                     )
@@ -60,10 +60,15 @@ const Item = ({ stopName, routeNum, destName, rmk, eta }) => {
     const isETA = () => {
         switch (true) {
             case (rmk == '服務只限於星期日及公眾假期' && eta == 0):
-                return (<View>
-                    <FontAwesomeIcon icon={faCircleExclamation} />
-                    <Text>服務只限於星期日及公眾假期</Text>
-                </View>
+                return (
+                    <View style={{ paddingTop: '3%' }}>
+                        <Text style={styles.etaText}>
+                            <FontAwesomeIcon
+                                icon={faCircleExclamation}
+                                color={'#005eb2'}
+                                size={32}/>
+                        </Text>
+                    </View>
                 )
                 break;
             case (eta > 0):
@@ -72,15 +77,15 @@ const Item = ({ stopName, routeNum, destName, rmk, eta }) => {
                         <Text style={styles.etaText}>
                             {eta}
                         </Text>
-                        <Text>分鐘</Text>
+                        <Text style={styles.minText}>分鐘</Text>
                     </View>
                 )
                 break;
             default:
                 return (
                     <View>
-                        <Text>--</Text>
-                        <Text>分鐘</Text>
+                        <Text style={styles.etaText}> - </Text>
+                        <Text style={styles.minText}>分鐘</Text>
                     </View>
                 )
                 break;
@@ -120,37 +125,27 @@ const Item = ({ stopName, routeNum, destName, rmk, eta }) => {
 
 const styles = StyleSheet.create({
     container: {
-        //flex: 0.5,
         borderWidth: 1,
-        borderColor: 'red',
+        borderColor: '#e2e2e2',
         flexDirection: 'row',
         justifyContent: 'space-between',
         height: 100,
     },
-    loadingContainer: {
-    },
     routeNumContainer: {
-        borderWidth: 1,
-        borderColor: 'green',
         width: '20%',
         justifyContent: 'center',
-
     },
     routeNumText: {
-        height: '30%',
-        fontSize: 25,
+        fontSize: 28,
         fontWeight: 'bold',
         textAlign: 'center',
     },
     routeDetailContainer: {
-        borderWidth: 1,
-        borderColor: 'green',
         width: '60%',
         justifyContent: 'center',
+        paddingLeft: '3%'
     },
     origContainer: {
-        borderWidth: 1,
-        borderColor: 'blue',
         flexDirection: 'row',
     },
     origText: {
@@ -163,11 +158,20 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     etaContainer: {
-        borderWidth: 1,
-        borderColor: 'green',
         width: '20%',
+        justifyContent: 'center',
     },
-    etaText: {},
+    etaText: {
+        fontSize: 30,
+        fontWeight: 'bold',
+        color: '#005eb2',
+        textAlign: 'right',
+        paddingRight: '10%',
+    },
+    minText: {
+        textAlign: 'right',
+        paddingRight: '10%',
+    }
 });
 
 export default BusToStopETAItem;
