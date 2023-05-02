@@ -55,10 +55,11 @@ const BusToStopETAItem = ({ stopName, whichStop }) => {
 const Item = ({ stopName, routeNum, routes }) => {
     const route = routes[0];
     if (!route) return null;
+    console.log(route)
 
     const isETA = () => {
         switch (true) {
-            case (rmk == '服務只限於星期日及公眾假期' && eta == 0):
+            case (route.rmk_tc == '服務只限於星期日及公眾假期' && route.eta == null):
                 return (
                     <View style={{ paddingTop: '3%' }}>
                         <Text style={styles.etaText}>
@@ -70,11 +71,11 @@ const Item = ({ stopName, routeNum, routes }) => {
                     </View>
                 )
                 break;
-            case (eta > 0):
+            case (route.eta !== null):
                 return (
                     <View>
                         <Text style={styles.etaText}>
-                            {eta}
+                            {/*{route.eta}*/}
                         </Text>
                         <Text style={styles.minText}>分鐘</Text>
                     </View>
