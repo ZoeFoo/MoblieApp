@@ -7,15 +7,21 @@ import api from '../../services';
 
 const BusToStopETAItem = ({ stopName, whichStop }) => {
     const [isLoading, setIsLoading] = useState(true);
-    const [stopETAData, setStopETAData] = useState('');
+    const [stopETAData, setStopETAData] = useState({});
 
     useEffect(() => {
         (async () => {
             const data = await api.getBusStopETA(`${whichStop}`);
-            console.log(data)
             const etaData = await data.data;
 
-            setStopETAData(etaData);
+            const groupByRoute = await etaData.reduce((group, routes) => {
+                const { route } = routes;
+                group[route] = group[route] ?? [];
+                group[route].push(routes);
+                return group;
+            }, {});
+
+            setStopETAData(groupByRoute);
             setIsLoading(false);
         })()
     }, []);
@@ -23,23 +29,28 @@ const BusToStopETAItem = ({ stopName, whichStop }) => {
     return (
         <View>
             {stopETAData ?
-                stopETAData.map(({ route, dest_tc, rmk_tc, eta }, i) => (
-                    <Item key={i}
-                        stopName={stopName}
-                        routeNum={route}
-                        destName={dest_tc}
-                        rmk={rmk_tc}
-                        eta={eta}
-                    />
-                )) : <View style={styles.loadingContainer}>
+                Object.keys(stopETAData).map((key, i) => {
+                    const routes = stopETAData[key];
+
+                    return (
+                        <Item key={i}
+                            stopName={stopName}
+                            routeNum={key}
+                            routes={routes}
+                        />
+                    )
+                }) : (<View style={styles.loadingContainer}>
                     <Loading />
-                </View>
+                </View>)
             }
         </View>
     )
 };
 
-const Item = ({ stopName, routeNum, destName, rmk, eta }) => {
+const Item = ({ stopName, routeNum, routes }) => {
+    const route = routes[0];
+    if (!route) return null;
+
     return (
         <View style={styles.container}>
             <View style={styles.routeNumContainer}>
@@ -52,7 +63,7 @@ const Item = ({ stopName, routeNum, destName, rmk, eta }) => {
                 <View style={styles.origContainer}>
                     <Text>往</Text>
                     <Text style={styles.origText}>
-                        {destName}
+                        {route.dest_tc}
                     </Text>
                 </View>
 
@@ -62,12 +73,12 @@ const Item = ({ stopName, routeNum, destName, rmk, eta }) => {
                     </Text>
                 </View>
 
-                <Text>{rmk }</Text>
+                <Text>{route.rmk_tc}</Text>
             </View>
 
             <View style={styles.etaContainer}>
                 <Text style={styles.etaText}>
-                    {eta }
+                    {route.eta}
                 </Text>
                 <Text>分鐘</Text>
             </View>
