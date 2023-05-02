@@ -5,7 +5,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Map from "../components/Map";
 
 export default function RouteDetailScreen({ navigation, route }) {
-    console.log({ route })
     const routeNum = (route.params ?? {})['routeNum'];
     const destination = (route.params ?? {})['destination'];
     navigation.setOptions({ title: `${routeNum} 往 ${destination}`})

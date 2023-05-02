@@ -9,7 +9,6 @@ import Loading from "../Loading";
 import api from '../../services';
 
 const BusToStopETAItem = ({ navigation, stopName, whichStop }) => {
-    const [isLoading, setIsLoading] = useState(true);
     const [stopETAData, setStopETAData] = useState(null);
 
     useEffect(() => {
@@ -25,7 +24,6 @@ const BusToStopETAItem = ({ navigation, stopName, whichStop }) => {
             }, {});
 
             setStopETAData(groupByRoute);
-            //setIsLoading(false);
         })()
     }, []);
 
@@ -34,7 +32,7 @@ const BusToStopETAItem = ({ navigation, stopName, whichStop }) => {
             {stopETAData ?
                 Object.keys(stopETAData).map((key, i) => {
                     const routes = stopETAData[key];
-
+                    console.log(routes)
                     return (
                         <Item key={i}
                             navigation={navigation}
