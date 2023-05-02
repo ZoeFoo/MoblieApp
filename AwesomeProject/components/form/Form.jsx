@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { FormControl, WarningOutlineIcon } from "native-base";
 import { useForm, Controller } from "react-hook-form";
@@ -10,7 +10,6 @@ import api from '../../services';
 
 const Form = ({ navigation }) => {
     const [selectValue, setSelectValue] = useState('');
-    const [nullValue, setNullValue] = useState(false);
 
     const { control, handleSubmit } = useForm({
         defaultValues: {
@@ -29,20 +28,34 @@ const Form = ({ navigation }) => {
         <View>
             <View style={styles.container}>
                 <Text>Bus Stop</Text>
+                {/*<Controller*/}
+                {/*    control={control}*/}
+                {/*    render={({ field: { onChange, onBlur, value } }) => (*/}
+                {/*        <SelectInput*/}
+                {/*            selectValue={selectValue}*/}
+                {/*            setSelectValue={setSelectValue}*/}
+                {/*            setNullValue={setNullValue}*/}
+                {/*        />*/}
+                {/*    )}*/}
+                {/*    name="busStop"*/}
+                {/*/>*/}
                 <Controller
                     control={control}
                     render={({ field: { onChange, onBlur, value } }) => (
-                        <SelectInput
-                            selectValue={selectValue}
-                            setSelectValue={setSelectValue}
-                            setNullValue={setNullValue}
-                        />
+                        <View>
+                            <Button
+                                title={"TSUEN KING CIRCUIT FLYOVER"}
+                                onPress={() => { setSelectValue("BFA3460955AC820C") }}
+                            />
+
+                            <Button
+                                title={"CHAI WAN KOK STREET TSUEN WAN"}
+                                onPress={() => { setSelectValue("5FB1FCAF80F3D97D") }}
+                            />
+                        </View>
                     )}
                     name="busStop"
                 />
-                {nullValue &&
-                    <Text style={styles.warn}>Please make a selection!</Text>
-                }
             </View>
 
             <Button title="Submit"
