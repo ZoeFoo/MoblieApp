@@ -3,12 +3,14 @@ import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import Form from '../components/form/Form';
+import BusStopButton from '../components/BusStopButton';
 
 export default function HomeScreen({ navigation }) {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.formContainer}>
-                <Form navigation={navigation} />
+                {/*<Form navigation={navigation} />*/}
+                <BusStopButton navigation={navigation} />
             </View>
         </SafeAreaView>
     );

@@ -27,38 +27,14 @@ const Form = ({ navigation }) => {
 
     return (
         <View>
-            <View>
-                {/*<Controller*/}
-                {/*    control={control}*/}
-                {/*    render={({ field: { onChange, onBlur, value } }) => (*/}
-                {/*        <SelectInput*/}
-                {/*            selectValue={selectValue}*/}
-                {/*            setSelectValue={setSelectValue}*/}
-                {/*            setNullValue={setNullValue}*/}
-                {/*        />*/}
-                {/*    )}*/}
-                {/*    name="busStop"*/}
-                {/*/>*/}
+            <View style={styles.selectInput }>
                 <Controller
                     control={control}
                     render={({ field: { onChange, onBlur, value } }) => (
-                        <View>
-                            <View style={styles.buttonContainer}>
-                                <TouchableOpacity
-                                    style={styles.button}
-                                    onPress={() => { setSelectValue("BFA3460955AC820C") }}>
-                                    <Text style={styles.text}>荃景圍天橋</Text>
-                                </TouchableOpacity>
-                            </View>
-
-                            <View style={styles.buttonContainer}>
-                                <TouchableOpacity
-                                    style={styles.button}
-                                    onPress={() => { setSelectValue("5FB1FCAF80F3D97D") }}>
-                                    <Text style={styles.text}>荃灣柴灣角街</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
+                        <SelectInput
+                            selectValue={selectValue}
+                            setSelectValue={setSelectValue}
+                        />
                     )}
                     name="busStop"
                 />
@@ -72,12 +48,8 @@ const Form = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-    buttonContainer: {
+    selectInput: {
         marginVertical: '10%',
-    },
-    button: {
-        backgroundColor: '#005db2',
-        borderRadius: 5,
     },
     text: {
         fontSize: 20,
