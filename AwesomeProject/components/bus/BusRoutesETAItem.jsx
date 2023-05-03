@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons/faCircleExclamation'
 import moment from 'moment';
@@ -8,9 +8,8 @@ import Loading from "../Loading";
 
 import api from '../../services';
 
-const BusToStopETAItem = ({ navigation, stopName, whichStop, latitude, longitude }) => {
-    const [isLoading, setIsLoading] = useState(true);
-    const [stopETAData, setStopETAData] = useState(null);
+const BusRoutesETAItem = ({ routeNum, whichStop }) => {
+    const [routesETAData, setRoutesETAData] = useState(null);
 
     useEffect(() => {
         (async () => {
@@ -23,24 +22,22 @@ const BusToStopETAItem = ({ navigation, stopName, whichStop, latitude, longitude
                 group[route].push(routes);
                 return group;
             }, {});
-            setStopETAData(groupByRoute);
+            setRoutesETAData(groupByRoute[routeNum]);
         })()
     }, []);
 
     return (
         <View>
-            {stopETAData ?
-                Object.keys(stopETAData).map((key, i) => {
-                    const routes = stopETAData[key];
+            {routesETAData ?
+                Object.keys(routesETAData).map(({ }, i) => {
+                    const route = routesETAData[i];
+                    /*console.log(route)*/
                     return (
                         <Item key={i}
-                            navigation={navigation}
-                            stopName={stopName}
-                            routeNum={key}
-                            routes={routes}
-                            latitude={latitude}
-                            longitude={longitude}
-                            whichStop={whichStop}
+                            routeNum={routeNum}
+                            dest={route.dest_tc}
+                            eta={route.eta}
+                            rmk={route.rmk_tc}
                         />
                     )
                 }) : (
@@ -51,11 +48,11 @@ const BusToStopETAItem = ({ navigation, stopName, whichStop, latitude, longitude
         </View>
     )
 };
-const Item = ({ navigation, stopName, routeNum, routes, , whichStop, latitude, longitude }) => {
-const Item = ({ navigation, stopName, routeNum, routes }) => {
+
+const Item = ({ routeNum, dest, eta, rmk }) => {
+    /*console.log({ routeNum, dest, eta, rmk })*/
     const now = moment(new Date());
-    const route = routes[0];
-    if (!route) return null;
+    if (!dest) return null;
 
     const etaMinutes = (eta) => {
         const min = moment.duration(now.diff(moment(eta))).asMinutes();
@@ -64,7 +61,7 @@ const Item = ({ navigation, stopName, routeNum, routes }) => {
 
     const isETA = () => {
         switch (true) {
-            case (route.rmk_tc == 'æœå‹™åªé™æ–¼æ˜ŸæœŸæ—¥åŠå…¬çœ¾å‡æœŸ' && route.eta == null):
+            case (rmk == '·ş„ÕÖ»ÏŞì¶ĞÇÆÚÈÕ¼°¹«±Š¼ÙÆÚ' && eta == null):
                 return (
                     <View style={{ paddingTop: '3%' }}>
                         <Text style={styles.etaText}>
@@ -76,13 +73,13 @@ const Item = ({ navigation, stopName, routeNum, routes }) => {
                     </View>
                 )
                 break;
-            case (route.eta !== null):
+            case (eta !== null):
                 return (
                     <View>
                         <Text style={styles.etaText}>
-                            {etaMinutes(route.eta)}
+                            {etaMinutes(eta)}
                         </Text>
-                        <Text style={styles.minText}>åˆ†é˜</Text>
+                        <Text style={styles.minText}>·ÖçŠ</Text>
                     </View>
                 )
                 break;
@@ -90,66 +87,36 @@ const Item = ({ navigation, stopName, routeNum, routes }) => {
                 return (
                     <View>
                         <Text style={styles.etaText}> - </Text>
-                        <Text style={styles.minText}>åˆ†é˜</Text>
+                        <Text style={styles.minText}>·ÖçŠ</Text>
                     </View>
                 )
                 break;
         }
     }
 
-    const destResult = route.dest_tc.split("(");
-    let destination;
-
-    if (destResult.length == 1) {
-        destination = destResult[0];
-    } else if (destResult[1] == 'å¾ªç’°ç·š)') {
-        destination = route.dest_tc;
-    } else {
-        const result = destResult[1].substring(0, destResult[1].length - 1);
-        destination = `${result}ç¸½ç«™`
-    }
-
     return (
-        <TouchableOpacity
-            onPress={() => {
-                navigation.navigate('RouteDetail', {
-                    destination: destination,
-                    latitude: latitude,
-                    longitude: longitude,
-                    destination: destination,
-                    whichStop: whichStop,
-                    stopName: stopName
-                })
-            }}
-            style={styles.container}>
-            <View style={styles.routeNumContainer}>
-                <Text style={styles.routeNumText}>
-                    {routeNum}
-                </Text>
+        <View style={styles.container}>
+            <View style={styles.etaContainer}>
+                {isETA()}
             </View>
 
             <View style={styles.routeDetailContainer}>
                 <View style={styles.origContainer}>
-                    <Text style={{ textAlignVertical: 'bottom' }}>å¾€</Text>
+                    <Text style={{ textAlignVertical: 'bottom' }}>Íù</Text>
                     <Text style={styles.origText}>
-                        {route.dest_tc}
+                        {dest}
                     </Text>
                 </View>
 
                 <View style={styles.stopContainer}>
                     <Text style={styles.stopText}>
-                        {stopName}
+                        
                     </Text>
                 </View>
             </View>
-
-            <View style={styles.etaContainer}>
-                {isETA()}
-            </View>
-        </TouchableOpacity>
-
+        </View>
     )
-}
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -202,6 +169,6 @@ const styles = StyleSheet.create({
         textAlign: 'right',
         paddingRight: '10%',
     }
-});
+})
 
-export default BusToStopETAItem;
+export default BusRoutesETAItem;
