@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Button, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import React from "react";
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 import api from '../services';
 
@@ -47,11 +47,11 @@ const BusStopButton = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     buttonContainer: {
-        marginVertical: '10%',
+        marginVertical: 15,
     },
     button: {
-        backgroundColor: '#005db2',
         borderRadius: 5,
+        backgroundColor: 'rgba(0, 93, 178, .8)',
     },
     text: {
         fontSize: 20,
@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
         marginVertical: '5%',
         letterSpacing: 5,
         textAlign: 'center',
-
     }
 })
 
