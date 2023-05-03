@@ -1,24 +1,39 @@
-import React from "react";
+import { useState, useEffect, useCallback } from "react";
 import { StyleSheet, View, ScrollView, RefreshControl } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
+import api from '../services';
 
 import BusToStopETAItem from '../components/bus/BusToStopETAItem';
 
 export default function BusStopScreen({ navigation, route }) {
-    const [refreshing, setRefreshing] = React.useState(false);
-    const stopName = (route.params ?? {})['stopName'];
-    const busStop = (route.params ?? {})['busStop'];
-    const latitude = (route.params ?? {})['latitude'];
-    const longitude = (route.params ?? {})['longitude'];
-    navigation.setOptions({ title: `${stopName}` });
+    const [data, setData] = useState({});
+    const [refreshing, setRefreshing] = useState(false);
 
-    const onRefresh = React.useCallback(() => {
+    const busStop = (route.params ?? {})['busStop'];
+    const { stopName, latitude, longitude } = data;
+
+    navigation.setOptions({ title: '' });
+
+    const onRefresh = useCallback(() => {
         setRefreshing(true);
         setTimeout(() => {
             setRefreshing(false);
         }, 1000);
     }, []);
 
+    useEffect(() => {
+        (async () => {
+            const { data } = await api.getBusStopDetail(`${busStop}`);
+            const stopName = data.name_tc;
+
+            setData({
+                stopName,
+                latitude: data.lat,
+                longitude: data.long,
+            });
+            navigation.setOptions({ title: `${stopName}` });
+        })();
+    }, []);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -37,10 +52,6 @@ export default function BusStopScreen({ navigation, route }) {
             </ScrollView>
         </SafeAreaView>
     );
-
-    //return isLoading ?
-    // (<View>...</View>) :
-    // (<View>...</View>);
 };
 
 const styles = StyleSheet.create({

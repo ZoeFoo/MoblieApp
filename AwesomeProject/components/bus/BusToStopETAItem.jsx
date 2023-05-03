@@ -9,23 +9,24 @@ import Loading from "../Loading";
 import api from '../../services';
 
 const BusToStopETAItem = ({ navigation, stopName, whichStop, latitude, longitude }) => {
-    const [isLoading, setIsLoading] = useState(true);
     const [stopETAData, setStopETAData] = useState(null);
 
     useEffect(() => {
-        (async () => {
-            const data = await api.getBusStopETA(`${whichStop}`);
-            const etaData = await data.data;
+        if (stopName) {
+            (async () => {
+                const data = await api.getBusStopETA(`${whichStop}`);
+                const etaData = await data.data;
 
-            const groupByRoute = await etaData.reduce((group, routes) => {
-                const { route } = routes;
-                group[route] = group[route] ?? [];
-                group[route].push(routes);
-                return group;
-            }, {});
-            setStopETAData(groupByRoute);
-        })()
-    }, []);
+                const groupByRoute = await etaData.reduce((group, routes) => {
+                    const { route } = routes;
+                    group[route] = group[route] ?? [];
+                    group[route].push(routes);
+                    return group;
+                }, {});
+                setStopETAData(groupByRoute);
+            })();
+        }
+    }, [stopName]);
 
     return (
         <View>
