@@ -1,10 +1,22 @@
-import React from "react";
-import { StyleSheet, View, ImageBackground, Text } from 'react-native';
+import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { StyleSheet, View, ImageBackground, Text, TouchableOpacity } from 'react-native';
 
+import i18n from '../locales';
 import BusStopButton from '../components/BusStopButton';
 
 export default function HomeScreen({ navigation }) {
+    const [_, setLocale] = useState(i18n.locale);
+    const changeLocale = locale => {
+        i18n.locale = locale;
+        setLocale(locale);
+    };
+    const locales = [
+        { text: "EN", locale: "en" },
+        { text: "繁", locale: "zh-TW" },
+        { text: "简", locale: "zh-CN" },
+    ].filter(({ locale }) => i18n.locale != locale);
+
     return (
         <SafeAreaView style={styles.container}>
             <ImageBackground style={styles.image}
@@ -13,11 +25,26 @@ export default function HomeScreen({ navigation }) {
 
             <View style={styles.groupContainer}>
                 <View style={styles.titleContainer}>
-                    <Text style={styles.titleText}>巴士實時數據</Text>
+                    <Text style={styles.titleText}>
+                        {i18n.t("appTitle")}
+                    </Text>
                 </View>
 
                 <View style={styles.formContainer}>
                     <BusStopButton navigation={navigation} />
+                </View>
+
+                <View style={styles.languages}>
+                    {
+                        locales.map(({ locale, text }) => (
+                            <TouchableOpacity key={locale}
+                                onPress={() => changeLocale(locale)}>
+                                <Text style={styles.language}>
+                                    {text}
+                                </Text>
+                            </TouchableOpacity>
+                        ))
+                    }
                 </View>
             </View>
         </SafeAreaView>
@@ -45,7 +72,6 @@ const styles = StyleSheet.create({
     },
     titleContainer: {
         width: '70%',
-        height: '10%',
         marginTop: '50%',
         alignSelf: 'center',
         justifyContent: 'center',
@@ -64,5 +90,17 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         width: '70%',
         marginTop: '20%'
+    },
+    languages: {
+        marginTop: 5,
+        flexDirection: "row",
+        justifyContent: "center",
+    },
+    language: {
+        marginHorizontal: 10,
+        color: "white",
+        fontSize: 16,
+        lineHeight: 20,
+        textDecorationLine: "underline",
     }
 })

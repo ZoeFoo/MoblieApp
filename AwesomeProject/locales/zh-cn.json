@@ -1,0 +1,13 @@
+{
+    "appTitle": "巴士实时数据",
+    "stopName": {
+        "5FB1FCAF80F3D97D": "荃湾柴湾角街",
+        "BFA3460955AC820C": "荃景围天桥"
+    },
+    "minutes": "分钟",
+    "terminus": "总站",
+    "busTo": "往",
+    "scheduled": "预定班次",
+    "noInformation": "未有资讯",
+    "weekendOnlyService": "服务只限于星期日及 \n公众假期"
+}

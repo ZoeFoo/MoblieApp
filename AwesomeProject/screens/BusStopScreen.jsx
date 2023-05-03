@@ -1,16 +1,18 @@
 import { useState, useEffect, useCallback } from "react";
 import { StyleSheet, View, ScrollView, RefreshControl } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import api from '../services';
+import i18n from '../locales';
 
 import BusToStopETAItem from '../components/bus/BusToStopETAItem';
 
 export default function BusStopScreen({ navigation, route }) {
-    const [data, setData] = useState({});
+    const [routes, setRoutes] = useState({});
     const [refreshing, setRefreshing] = useState(false);
 
     const busStop = (route.params ?? {})['busStop'];
-    const { stopName, latitude, longitude } = data;
+    const { stopName, latitude, longitude } = routes;
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
@@ -22,18 +24,23 @@ export default function BusStopScreen({ navigation, route }) {
     useEffect(() => {
         (async () => {
             const { data } = await api.getBusStopDetail(`${busStop}`);
-            const stopName = data.name_tc;
+            const stopName = (() => {
+                switch (i18n?.locale) {
+                    case "en": return data.name_en;
+                    case "zh-CN": return data.name_sc;
+                    default: return data.name_tc;
+                }
+            })();
 
-            setData({
+            setRoutes({
                 stopName,
                 latitude: data.lat,
                 longitude: data.long,
             });
+
             navigation.setOptions({ title: `${stopName}` });
         })();
     }, []);
-
-    navigation.setOptions({ title: '' });
 
     return (
         <SafeAreaView style={styles.container}>

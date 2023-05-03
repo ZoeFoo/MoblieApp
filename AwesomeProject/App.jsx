@@ -21,7 +21,7 @@ function App() {
                     <Stack.Screen name="BusStop"
                         component={BusStopScreen}
                         options={{
-                            title: 'BusStop',
+                            title: '',
                             headerStyle: {
                                 backgroundColor: '#005eb2',
                             },
@@ -36,7 +36,7 @@ function App() {
                     <Stack.Screen name="RouteDetail"
                         component={RouteDetailScreen}
                         options={{
-                            title: 'RouteDetail',
+                            title: '',
                             headerStyle: {
                                 backgroundColor: '#005eb2',
                             },
