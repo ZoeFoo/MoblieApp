@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Button, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { FormControl, WarningOutlineIcon } from "native-base";
+import { Button, StyleSheet, View } from 'react-native';
 import { useForm, Controller } from "react-hook-form";
 
 import SelectInput from "./SelectInput";
@@ -30,7 +29,7 @@ const Form = ({ navigation }) => {
             <View style={styles.selectInput }>
                 <Controller
                     control={control}
-                    render={({ field: { onChange, onBlur, value } }) => (
+                    render={() => (
                         <SelectInput
                             selectValue={selectValue}
                             setSelectValue={setSelectValue}
@@ -58,7 +57,6 @@ const styles = StyleSheet.create({
         marginVertical: '5%',
         letterSpacing: 5,
         textAlign: 'center',
-        
     }
 })
 

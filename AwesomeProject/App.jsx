@@ -15,21 +15,13 @@ function App() {
                 <Stack.Navigator>
                     <Stack.Screen name="Home"
                         component={HomeScreen}
-                        options={{
-                            headerStyle: {
-                                backgroundColor: '#005eb2',
-                            },
-                            headerTintColor: '#fff',
-                            headerTitleStyle: {
-                                fontSize: 25,
-                                fontWeight: 'bold',
-                            },
-                        }}
+                        options={{ headerShown: false }}
                     />
 
                     <Stack.Screen name="BusStop"
                         component={BusStopScreen}
                         options={{
+                            title: 'BusStop',
                             headerStyle: {
                                 backgroundColor: '#005eb2',
                             },
@@ -44,6 +36,7 @@ function App() {
                     <Stack.Screen name="RouteDetail"
                         component={RouteDetailScreen}
                         options={{
+                            title: 'RouteDetail',
                             headerStyle: {
                                 backgroundColor: '#005eb2',
                             },
