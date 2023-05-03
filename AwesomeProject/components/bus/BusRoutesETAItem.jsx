@@ -59,7 +59,7 @@ const Item = ({ routeNum, dest, eta, rmk }) => {
 
     const isETA = () => {
         switch (true) {
-            case (rmk == '·ş„ÕÖ»ÏŞì¶ĞÇÆÚÈÕ¼°¹«±Š¼ÙÆÚ' && eta == null):
+            case (rmk == 'æœå‹™åªé™æ–¼æ˜ŸæœŸæ—¥åŠå…¬çœ¾å‡æœŸ' && eta == null):
                 return (
                     <View style={{ paddingTop: '3%' }}>
                         <Text style={styles.etaText}>
@@ -77,7 +77,7 @@ const Item = ({ routeNum, dest, eta, rmk }) => {
                         <Text style={styles.etaText}>
                             {etaMinutes(eta)}
                         </Text>
-                        <Text style={styles.minText}>·ÖçŠ</Text>
+                        <Text style={styles.minText}>åˆ†é˜</Text>
                     </View>
                 )
                 break;
@@ -85,7 +85,7 @@ const Item = ({ routeNum, dest, eta, rmk }) => {
                 return (
                     <View>
                         <Text style={styles.etaText}> - </Text>
-                        <Text style={styles.minText}>·ÖçŠ</Text>
+                        <Text style={styles.minText}>åˆ†é˜</Text>
                     </View>
                 )
                 break;
@@ -100,7 +100,7 @@ const Item = ({ routeNum, dest, eta, rmk }) => {
 
             <View style={styles.routeDetailContainer}>
                 <View style={styles.origContainer}>
-                    <Text style={{ textAlignVertical: 'bottom' }}>Íù</Text>
+                    <Text style={{ textAlignVertical: 'bottom' }}>å¾€</Text>
                     <Text style={styles.origText}>
                         {dest}
                     </Text>
