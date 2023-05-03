@@ -19,7 +19,9 @@ const Form = ({ navigation }) => {
         const stopName = await api.getBusStopDetail(`${selectValue}`);
         navigation.navigate('BusStop', {
             stopName: stopName.data.name_tc,
-            busStop: selectValue
+            busStop: selectValue,
+            latitude: stopName.data.lat,
+            longitude: stopName.data.long,
         });
     };
 

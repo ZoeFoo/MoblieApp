@@ -8,6 +8,8 @@ export default function BusStopScreen({ navigation, route }) {
     const [refreshing, setRefreshing] = React.useState(false);
     const stopName = (route.params ?? {})['stopName'];
     const busStop = (route.params ?? {})['busStop'];
+    const latitude = (route.params ?? {})['latitude'];
+    const longitude = (route.params ?? {})['longitude'];
     navigation.setOptions({ title: `${stopName}` });
 
     const onRefresh = React.useCallback(() => {
@@ -28,6 +30,8 @@ export default function BusStopScreen({ navigation, route }) {
                         navigation={navigation}
                         stopName={stopName}
                         whichStop={busStop}
+                        latitude={latitude}
+                        longitude={longitude}
                     />
                 </View>
             </ScrollView>
