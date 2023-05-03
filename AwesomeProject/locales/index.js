@@ -9,7 +9,6 @@ const i18n = new I18n({
     "zh-TW": zhTW,
     "zh-CN": zhCN,
 });
-i18n.defaultLocale = "en";
-i18n.locale = "en";
+i18n.locale = "zh-TW";
 
 export default i18n;

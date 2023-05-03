@@ -3,5 +3,8 @@
     "stopName": {
         "5FB1FCAF80F3D97D": "荃灣柴灣角街",
         "BFA3460955AC820C": "荃景圍天橋"
-    }
+    },
+    "minutes": "分鐘",
+    "terminus": "總站",
+    "busTo": "往"
 }

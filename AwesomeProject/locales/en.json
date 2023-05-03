@@ -3,5 +3,8 @@
     "stopName": {
         "5FB1FCAF80F3D97D": "Chai Wan Kok Street Tsuen Wan",
         "BFA3460955AC820C": "Tsuen King Circuit Flyover"
-    }
+    },
+    "minutes": "Minute(s)",
+    "terminus": " Terminus",
+    "busTo": "To "
 }
