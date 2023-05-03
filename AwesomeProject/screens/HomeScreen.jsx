@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, View, ImageBackground, Text } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import i18n from '../locales';
 import BusStopButton from '../components/BusStopButton';
 
 export default function HomeScreen({ navigation }) {
@@ -13,7 +14,9 @@ export default function HomeScreen({ navigation }) {
 
             <View style={styles.groupContainer}>
                 <View style={styles.titleContainer}>
-                    <Text style={styles.titleText}>巴士實時數據</Text>
+                    <Text style={styles.titleText}>
+                        {i18n.t("appTitle")}
+                    </Text>
                 </View>
 
                 <View style={styles.formContainer}>
@@ -45,7 +48,6 @@ const styles = StyleSheet.create({
     },
     titleContainer: {
         width: '70%',
-        height: '10%',
         marginTop: '50%',
         alignSelf: 'center',
         justifyContent: 'center',
