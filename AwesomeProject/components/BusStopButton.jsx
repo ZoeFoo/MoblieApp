@@ -1,26 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
-import api from '../services';
-
 const BusStopButton = ({ navigation }) => {
-    const getValue = async (value) => {
-        const stopDetail = await api.getBusStopDetail(`${value}`);
-        const stopName = stopDetail.data.name_tc;
-        const busStop = value;
-        const latitude = stopDetail.data.lat;
-        const longitude = stopDetail.data.long;
-        clicked({ stopName, busStop, latitude, longitude });
-    }
-
-    const clicked = ({ stopName, busStop, latitude, longitude }) => {
-        navigation.navigate('BusStop', {
-            stopName: stopName,
-            busStop: busStop,
-            latitude: latitude,
-            longitude: longitude,
-        });
-    }
+    const navigate = async (value) => {
+        navigation.navigate('BusStop', { busStop: value });
+    };
 
     return (
         <View>
@@ -28,7 +12,7 @@ const BusStopButton = ({ navigation }) => {
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => getValue("BFA3460955AC820C")}>
+                        onPress={() => navigate("BFA3460955AC820C")}>
                         <Text style={styles.text}>荃景圍天橋</Text>
                     </TouchableOpacity>
                 </View>
@@ -36,7 +20,7 @@ const BusStopButton = ({ navigation }) => {
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => getValue("5FB1FCAF80F3D97D")}>
+                        onPress={() => navigate("5FB1FCAF80F3D97D")}>
                         <Text style={styles.text}>荃灣柴灣角街</Text>
                     </TouchableOpacity>
                 </View>
