@@ -5,6 +5,7 @@ import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons/faCircleE
 import moment from 'moment';
 
 import api from '../../services';
+import i18n from '../../locales';
 
 const BusRoutesETAItem = ({ routeNum, whichStop, setIsLoading }) => {
     const [routesETAData, setRoutesETAData] = useState(null);
@@ -46,80 +47,79 @@ const BusRoutesETAItem = ({ routeNum, whichStop, setIsLoading }) => {
 };
 
 const Item = ({ dest, eta, rmk }) => {
-    const now = moment(new Date());
     if (!dest) return null;
-
-    const etaMinutes = (eta) => {
-        const min = moment.duration(now.diff(moment(eta))).asMinutes();
-        return Math.ceil(Math.abs(min))
-    }
-
-    const weekendServiceInfo = `服務只限於星期日及 \n公眾假期`;
-
-    const isETA = () => {
-        switch (true) {
-            case (rmk == '服務只限於星期日及公眾假期' && eta == null):
-                return (
-                    <View style={styles.container}>
-                        <View style={styles.etaContainer}>
-                            <Text style={[styles.etaText, { marginRight: '30%' }]}>
-                                <FontAwesomeIcon
-                                    icon={faCircleExclamation}
-                                    color={'#005eb2'}
-                                    size={32} />
-                            </Text>
-                        </View>
-
-                        <View style={styles.routeDetailContainer}>
-                            <Text style={styles.infoText}>
-                                {weekendServiceInfo}
-                            </Text>
-                        </View>
-                    </View>
-                )
-                break;
-            case (eta !== null):
-                return (
-                    <View style={styles.container}>
-                        <View style={styles.etaContainer}>
-                            <Text style={styles.etaText}>
-                                {etaMinutes(eta)}
-                            </Text>
-                            <Text style={styles.minText}>分鐘</Text>
-                        </View>
-
-                        <View style={styles.routeDetailContainer}>
-                            <Text style={styles.infoText}>
-                                預定班次
-                            </Text>
-                        </View>
-                    </View>
-                )
-                break;
-            default:
-                return (
-                    <View style={styles.container}>
-                        <View style={styles.etaContainer}>
-                            <Text style={styles.etaText}> - </Text>
-                            <Text style={styles.minText}>分鐘</Text>
-                        </View>
-
-                        <View style={styles.routeDetailContainer}>
-                            <Text style={styles.infoText}>
-                                未有資訊
-                            </Text>
-                        </View>
-                    </View>
-                )
-                break;
-        }
-    }
 
     return (
         <View>
-            {isETA()}
+            <ETA rmk={rmk} eta={eta} />
         </View>
     )
+};
+
+const ETA = ({ rmk, eta }) => {
+    const now = moment(new Date());
+    const etaMinutes = (eta) => {
+        const min = moment.duration(now.diff(moment(eta))).asMinutes();
+        return Math.ceil(Math.abs(min))
+    };
+
+    switch (true) {
+        case (rmk == '服務只限於星期日及公眾假期' && eta == null):
+            return (
+                <View style={styles.container}>
+                    <View style={styles.etaContainer}>
+                        <Text style={[styles.etaText, { marginRight: '30%' }]}>
+                            <FontAwesomeIcon
+                                icon={faCircleExclamation}
+                                color={'#005eb2'}
+                                size={32} />
+                        </Text>
+                    </View>
+
+                    <View style={styles.routeDetailContainer}>
+                        <Text style={styles.infoText}>
+                            {i18n.t("weekendOnlyService")}
+                        </Text>
+                    </View>
+                </View>
+            );
+        case (eta !== null):
+            return (
+                <View style={styles.container}>
+                    <View style={styles.etaContainer}>
+                        <Text style={styles.etaText}>
+                            {etaMinutes(eta)}
+                        </Text>
+                        <Text style={styles.minText}>
+                            {i18n.t("minutes")}
+                        </Text>
+                    </View>
+
+                    <View style={styles.routeDetailContainer}>
+                        <Text style={styles.infoText}>
+                            {i18n.t("scheduled")}
+                        </Text>
+                    </View>
+                </View>
+            );
+    }
+
+    return (
+        <View style={styles.container}>
+            <View style={styles.etaContainer}>
+                <Text style={styles.etaText}> - </Text>
+                <Text style={styles.minText}>
+                    {i18n.t("minutes")}
+                </Text>
+            </View>
+
+            <View style={styles.routeDetailContainer}>
+                <Text style={styles.infoText}>
+                    {i18n.t("noInformation")}
+                </Text>
+            </View>
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({

@@ -6,5 +6,8 @@
     },
     "minutes": "Minute(s)",
     "terminus": " Terminus",
-    "busTo": "To "
+    "busTo": "To ",
+    "scheduled": "Scheduled",
+    "noInformation": "No Information",
+    "weekendOnlyService": "This route only\noperates on Sundays and Public Holidays"
 }

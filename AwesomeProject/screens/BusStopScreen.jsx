@@ -42,8 +42,6 @@ export default function BusStopScreen({ navigation, route }) {
         })();
     }, []);
 
-    navigation.setOptions({ title: '' });
-
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollViewContainer}

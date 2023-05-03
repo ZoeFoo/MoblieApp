@@ -6,5 +6,8 @@
     },
     "minutes": "分鐘",
     "terminus": "總站",
-    "busTo": "往"
+    "busTo": "往",
+    "scheduled": "預定班次",
+    "noInformation": "未有資訊",
+    "weekendOnlyService": "服務只限於星期日及 \n公眾假期"
 }

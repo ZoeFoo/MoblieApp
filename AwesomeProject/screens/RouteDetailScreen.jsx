@@ -2,8 +2,9 @@ import { useState, useEffect, useCallback } from "react";
 import { StyleSheet, View, ScrollView, RefreshControl, Text } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import Loading from "../components/Loading";
+import i18n from "../locales";
 import Map from "../components/Map";
+import Loading from "../components/Loading";
 import BusRoutesETAItem from '../components/bus/BusRoutesETAItem';
 
 export default function RouteDetailScreen({ navigation, route }) {
@@ -29,10 +30,8 @@ export default function RouteDetailScreen({ navigation, route }) {
         if (!showMap) {
             setTimeout(() => setShowMap(true), 1000);
         }
-        navigation.setOptions({ title: `${routeNum} 往 ${destination}` });
+        navigation.setOptions({ title: `${routeNum} ${i18n.t("busTo")} ${destination}` });
     }, []);
-
-    navigation.setOptions({ title: "" });
 
     return (
         <SafeAreaView style={styles.container}>
