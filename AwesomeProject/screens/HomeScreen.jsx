@@ -21,5 +21,7 @@ const styles = StyleSheet.create({
     },
     formContainer: {
         alignSelf: 'center',
+        height: '50%',
+        width: '70%',
     }
 })

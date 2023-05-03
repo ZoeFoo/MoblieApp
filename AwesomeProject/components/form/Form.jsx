@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { FormControl, WarningOutlineIcon } from "native-base";
 import { useForm, Controller } from "react-hook-form";
 
@@ -27,8 +27,7 @@ const Form = ({ navigation }) => {
 
     return (
         <View>
-            <View style={styles.container}>
-                <Text>Bus Stop</Text>
+            <View>
                 {/*<Controller*/}
                 {/*    control={control}*/}
                 {/*    render={({ field: { onChange, onBlur, value } }) => (*/}
@@ -44,15 +43,21 @@ const Form = ({ navigation }) => {
                     control={control}
                     render={({ field: { onChange, onBlur, value } }) => (
                         <View>
-                            <Button
-                                title={"TSUEN KING CIRCUIT FLYOVER"}
-                                onPress={() => { setSelectValue("BFA3460955AC820C") }}
-                            />
+                            <View style={styles.buttonContainer}>
+                                <TouchableOpacity
+                                    style={styles.button}
+                                    onPress={() => { setSelectValue("BFA3460955AC820C") }}>
+                                    <Text style={styles.text}>荃景圍天橋</Text>
+                                </TouchableOpacity>
+                            </View>
 
-                            <Button
-                                title={"CHAI WAN KOK STREET TSUEN WAN"}
-                                onPress={() => { setSelectValue("5FB1FCAF80F3D97D") }}
-                            />
+                            <View style={styles.buttonContainer}>
+                                <TouchableOpacity
+                                    style={styles.button}
+                                    onPress={() => { setSelectValue("5FB1FCAF80F3D97D") }}>
+                                    <Text style={styles.text}>荃灣柴灣角街</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     )}
                     name="busStop"
@@ -67,11 +72,21 @@ const Form = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 0.5,
+    buttonContainer: {
+        marginVertical: '10%',
+    },
+    button: {
+        backgroundColor: '#005db2',
+        borderRadius: 5,
     },
     text: {
-        margin: '2%'
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: 'white',
+        marginVertical: '5%',
+        letterSpacing: 5,
+        textAlign: 'center',
+        
     }
 })
 
