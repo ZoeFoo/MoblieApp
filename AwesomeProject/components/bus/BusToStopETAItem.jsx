@@ -30,25 +30,27 @@ const BusToStopETAItem = ({ navigation, stopName, whichStop, latitude, longitude
 
     return (
         <View>
-            {stopETAData ?
-                Object.keys(stopETAData).map((key, i) => {
-                    const routes = stopETAData[key];
-                    return (
-                        <Item key={i}
-                            navigation={navigation}
-                            stopName={stopName}
-                            routeNum={key}
-                            routes={routes}
-                            latitude={latitude}
-                            longitude={longitude}
-                            whichStop={whichStop}
-                        />
+            {
+                stopETAData ?
+                    Object.keys(stopETAData).map((key, i) => {
+                        const routes = stopETAData[key];
+                        return (
+                            <Item key={i}
+                                navigation={navigation}
+                                stopName={stopName}
+                                routeNum={key}
+                                routes={routes}
+                                latitude={latitude}
+                                longitude={longitude}
+                                whichStop={whichStop}
+                            />
+                        )
+                    }) : (
+                        <View>
+                            <Loading />
+                        </View>
                     )
-                }) : (
-                    <View>
-                        <Loading />
-                    </View>
-                )}
+            }
         </View>
     )
 };

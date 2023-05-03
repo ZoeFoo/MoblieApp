@@ -12,8 +12,6 @@ export default function BusStopScreen({ navigation, route }) {
     const busStop = (route.params ?? {})['busStop'];
     const { stopName, latitude, longitude } = data;
 
-    navigation.setOptions({ title: '' });
-
     const onRefresh = useCallback(() => {
         setRefreshing(true);
         setTimeout(() => {
@@ -35,11 +33,14 @@ export default function BusStopScreen({ navigation, route }) {
         })();
     }, []);
 
+    navigation.setOptions({ title: '' });
+
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }>
+            <ScrollView contentContainerStyle={styles.scrollViewContainer}
+                refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                }>
                 <View style={styles.itemContainer}>
                     <BusToStopETAItem
                         navigation={navigation}
@@ -59,7 +60,11 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
     },
+    scrollViewContainer: {
+        flexGrow: 1,
+    },
     itemContainer: {
-        backgroundColor: 'white',
+        flex: 1,
+        justifyContent: 'center',
     }
 });

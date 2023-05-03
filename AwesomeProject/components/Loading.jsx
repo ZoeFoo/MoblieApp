@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, View, Image } from 'react-native';
-import loadingImg from '../public/loading.gif';
 
 const Loading = () => {
     return (
@@ -17,12 +16,12 @@ const styles = StyleSheet.create({
     container: {
         flex:1,
         backgroundColor: 'white',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     imageStyle: {
         width: 450,
         height: 450,
-        marginTop: "50%",
-        alignSelf: 'center',
     }
 })
 
