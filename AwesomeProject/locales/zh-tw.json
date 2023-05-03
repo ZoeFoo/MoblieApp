@@ -1,3 +1,7 @@
 {
-    "appTitle": "巴士實時數據"
+    "appTitle": "巴士實時數據",
+    "stopName": {
+        "5FB1FCAF80F3D97D": "荃灣柴灣角街",
+        "BFA3460955AC820C": "荃景圍天橋"
+    }
 }

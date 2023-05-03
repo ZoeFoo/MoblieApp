@@ -1,31 +1,36 @@
 import React from "react";
+import i18n from "../locales";
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 const BusStopButton = ({ navigation }) => {
+    return (
+        <View>
+            <View>
+                <View style={styles.buttonContainer}>
+                    <Button id="BFA3460955AC820C" navigation={navigation} />
+                </View>
+
+                <View style={styles.buttonContainer}>
+                    <Button id="5FB1FCAF80F3D97D" navigation={navigation} />
+                </View>
+            </View>
+        </View >
+    )
+};
+
+const Button = ({ id, navigation }) => {
     const navigate = async (value) => {
         navigation.navigate('BusStop', { busStop: value });
     };
 
     return (
-        <View>
-            <View>
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => navigate("BFA3460955AC820C")}>
-                        <Text style={styles.text}>荃景圍天橋</Text>
-                    </TouchableOpacity>
-                </View>
-
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => navigate("5FB1FCAF80F3D97D")}>
-                        <Text style={styles.text}>荃灣柴灣角街</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        </View >
+        <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigate(id)}>
+            <Text style={styles.text}>
+                {i18n.t(`stopName.${id}`)}
+            </Text>
+        </TouchableOpacity>
     )
 };
 
