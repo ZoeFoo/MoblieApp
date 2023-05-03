@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { StyleSheet, View, ScrollView, RefreshControl, Text } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -7,36 +7,52 @@ import Map from "../components/Map";
 import BusRoutesETAItem from '../components/bus/BusRoutesETAItem';
 
 export default function RouteDetailScreen({ navigation, route }) {
-    //console.log({ route })
     const routeNum = (route.params ?? {})['routeNum'];
     const destination = (route.params ?? {})['destination'];
     const latitude = (route.params ?? {})['latitude'];
     const longitude = (route.params ?? {})['longitude'];
     const whichStop = (route.params ?? {})['whichStop'];
     const stopName = (route.params ?? {})['stopName'];
-    navigation.setOptions({ title: `${routeNum} 往 ${destination}` });
 
-    const [refreshing, setRefreshing] = React.useState(false);
+    const [showMap, setShowMap] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
-    const onRefresh = React.useCallback(() => {
+    const onRefresh = useCallback(() => {
         setRefreshing(true);
         setTimeout(() => {
             setRefreshing(false);
         }, 1000);
     }, []);
 
+    useEffect(() => {
+        if (!showMap) {
+            setTimeout(() => setShowMap(true), 1000);
+        }
+        navigation.setOptions({ title: `${routeNum} 往 ${destination}` });
+    }, []);
+
+    navigation.setOptions({ title: "" });
+
     return (
         <SafeAreaView style={styles.container}>
-            {isLoading && <View style={styles.loadingContainer}>
-                <Loading />
-            </View>}
+            {
+                isLoading && (
+                    <View style={styles.loadingContainer}>
+                        <Loading />
+                    </View>
+                )
+            }
 
             <ScrollView refreshControl={
-                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-                }>
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }>
                 <View style={{ height: 300 }}>
-                    <Map latitude={latitude} longitude={longitude} />
+                    {
+                        showMap && (
+                            <Map latitude={latitude} longitude={longitude} />
+                        )
+                    }
                 </View>
 
                 <View style={styles.stopNameContainer}>
