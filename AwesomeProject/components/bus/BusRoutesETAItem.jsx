@@ -8,7 +8,7 @@ import Loading from "../Loading";
 
 import api from '../../services';
 
-const BusRoutesETAItem = ({ routeNum, whichStop }) => {
+const BusRoutesETAItem = ({ routeNum, whichStop, setIsLoading }) => {
     const [routesETAData, setRoutesETAData] = useState(null);
 
     useEffect(() => {
@@ -23,6 +23,7 @@ const BusRoutesETAItem = ({ routeNum, whichStop }) => {
                 return group;
             }, {});
             setRoutesETAData(groupByRoute[routeNum]);
+            setIsLoading(false);
         })()
     }, []);
 
@@ -31,7 +32,6 @@ const BusRoutesETAItem = ({ routeNum, whichStop }) => {
             {routesETAData ?
                 Object.keys(routesETAData).map(({ }, i) => {
                     const route = routesETAData[i];
-                    /*console.log(route)*/
                     return (
                         <Item key={i}
                             routeNum={routeNum}
@@ -41,9 +41,7 @@ const BusRoutesETAItem = ({ routeNum, whichStop }) => {
                         />
                     )
                 }) : (
-                    <View>
-                        <Loading />
-                    </View>
+                    null
                 )}
         </View>
     )
