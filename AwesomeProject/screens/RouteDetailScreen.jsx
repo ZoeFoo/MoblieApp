@@ -16,23 +16,6 @@ export default function RouteDetailScreen({ navigation, route }) {
     navigation.setOptions({ title: `${routeNum} 往 ${destination}` });
 
     const [refreshing, setRefreshing] = React.useState(false);
-    //const [stopETAData, setStopETAData] = useState(null);
-
-    //useEffect(() => {
-    //    (async () => {
-    //        const data = await api.getBusStopETA(`${whichStop}`);
-    //        const etaData = await data.data;
-
-    //        const groupByRoute = await etaData.reduce((group, routes) => {
-    //            const { route } = routes;
-    //            group[route] = group[route] ?? [];
-    //            group[route].push(routes);
-    //            return group;
-    //        }, {});
-    //        console.log('aaaaaaaaaaaaaaaaaaaaaa', groupByRoute)
-    //        setStopETAData(groupByRoute);
-    //    })()
-    //}, []);
 
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);

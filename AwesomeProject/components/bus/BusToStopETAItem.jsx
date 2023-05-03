@@ -51,8 +51,7 @@ const BusToStopETAItem = ({ navigation, stopName, whichStop, latitude, longitude
         </View>
     )
 };
-const Item = ({ navigation, stopName, routeNum, routes, , whichStop, latitude, longitude }) => {
-const Item = ({ navigation, stopName, routeNum, routes }) => {
+const Item = ({ navigation, stopName, routeNum, routes, whichStop, latitude, longitude }) => {
     const now = moment(new Date());
     const route = routes[0];
     if (!route) return null;
@@ -113,6 +112,7 @@ const Item = ({ navigation, stopName, routeNum, routes }) => {
         <TouchableOpacity
             onPress={() => {
                 navigation.navigate('RouteDetail', {
+                    routeNum: routeNum,
                     destination: destination,
                     latitude: latitude,
                     longitude: longitude,
