@@ -1,16 +1,19 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
-const Map = () => {
+const Map = ({ latitude, longitude }) => {
+    const latitudeNum = Number(latitude);
+    const longitudeNum = Number(longitude);
+
     return (
         <MapView
             style={{ flex: 1 }}
             showsUserLocation
             initialCamera={{
                 center: {
-                    latitude: 22.375396,
-                    longitude: 114.108571,
+                    latitude: latitudeNum,
+                    longitude: longitudeNum,
                 },
                 pitch: 2,
                 heading: 20,
@@ -18,8 +21,8 @@ const Map = () => {
                 zoom: 17,
             }}>
             <Marker coordinate={{
-                latitude: 22.375396,
-                longitude: 114.108571,
+                latitude: latitudeNum,
+                longitude: longitudeNum,
             }} />
         </MapView>
     );

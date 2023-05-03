@@ -8,8 +8,7 @@ import Loading from "../Loading";
 
 import api from '../../services';
 
-const BusToStopETAItem = ({ navigation, stopName, whichStop }) => {
-    const [isLoading, setIsLoading] = useState(true);
+const BusToStopETAItem = ({ navigation, stopName, whichStop, latitude, longitude }) => {
     const [stopETAData, setStopETAData] = useState(null);
 
     useEffect(() => {
@@ -25,7 +24,6 @@ const BusToStopETAItem = ({ navigation, stopName, whichStop }) => {
             }, {});
 
             setStopETAData(groupByRoute);
-            //setIsLoading(false);
         })()
     }, []);
 
@@ -41,6 +39,8 @@ const BusToStopETAItem = ({ navigation, stopName, whichStop }) => {
                             stopName={stopName}
                             routeNum={key}
                             routes={routes}
+                            latitude={latitude}
+                            longitude={longitude}
                         />
                     )
                 }) : (<View>
@@ -51,7 +51,7 @@ const BusToStopETAItem = ({ navigation, stopName, whichStop }) => {
     )
 };
 
-const Item = ({ navigation, stopName, routeNum, routes }) => {
+const Item = ({ navigation, stopName, routeNum, routes, latitude, longitude }) => {
     const now = moment(new Date());
     const route = routes[0];
     if (!route) return null;
@@ -113,7 +113,9 @@ const Item = ({ navigation, stopName, routeNum, routes }) => {
             onPress={() => {
                 navigation.navigate('RouteDetail', {
                     routeNum: routeNum,
-                    destination: destination
+                    destination: destination,
+                    latitude: latitude,
+                    longitude: longitude,
                 })
             }}
             style={styles.container}>

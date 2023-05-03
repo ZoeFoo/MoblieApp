@@ -8,7 +8,10 @@ export default function RouteDetailScreen({ navigation, route }) {
     console.log({ route })
     const routeNum = (route.params ?? {})['routeNum'];
     const destination = (route.params ?? {})['destination'];
-    navigation.setOptions({ title: `${routeNum} 往 ${destination}`})
+    const latitude = (route.params ?? {})['latitude'];
+    const longitude = (route.params ?? {})['longitude'];
+    navigation.setOptions({ title: `${routeNum} 往 ${destination}` });
+
     const [refreshing, setRefreshing] = React.useState(false);
 
     const onRefresh = React.useCallback(() => {
@@ -17,13 +20,14 @@ export default function RouteDetailScreen({ navigation, route }) {
             setRefreshing(false);
         }, 1000);
     }, []);
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView refreshControl={
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }>
                 <View style={{ height: 300 }}>
-                    <Map />
+                    <Map latitude={latitude} longitude={longitude} />
                 </View>
             </ScrollView>
         </SafeAreaView>
