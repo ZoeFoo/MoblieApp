@@ -1,9 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, View } from 'react-native';
-import { Select, VStack, CheckIcon, FormControl, NativeBaseProvider, WarningOutlineIcon } from "native-base";
-import { NavigationContainer } from '@react-navigation/native';
-
-import api from '../../services';
+import React from "react";
+import { Select, CheckIcon } from "native-base";
 
 const SelectInput = ({ selectValue, setSelectValue }) => {
     return (
