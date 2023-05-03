@@ -4,8 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons/faCircleExclamation'
 import moment from 'moment';
 
-import Loading from "../Loading";
-
 import api from '../../services';
 
 const BusRoutesETAItem = ({ routeNum, whichStop, setIsLoading }) => {
@@ -32,9 +30,9 @@ const BusRoutesETAItem = ({ routeNum, whichStop, setIsLoading }) => {
             {routesETAData ?
                 Object.keys(routesETAData).map(({ }, i) => {
                     const route = routesETAData[i];
+                    console.log(route)
                     return (
                         <Item key={i}
-                            routeNum={routeNum}
                             dest={route.dest_tc}
                             eta={route.eta}
                             rmk={route.rmk_tc}
@@ -47,8 +45,7 @@ const BusRoutesETAItem = ({ routeNum, whichStop, setIsLoading }) => {
     )
 };
 
-const Item = ({ routeNum, dest, eta, rmk }) => {
-    /*console.log({ routeNum, dest, eta, rmk })*/
+const Item = ({ dest, eta, rmk }) => {
     const now = moment(new Date());
     if (!dest) return null;
 
@@ -57,35 +54,61 @@ const Item = ({ routeNum, dest, eta, rmk }) => {
         return Math.ceil(Math.abs(min))
     }
 
+    const weekendServiceInfo = `服務只限於星期日及 \n公眾假期`;
+
     const isETA = () => {
         switch (true) {
             case (rmk == '服務只限於星期日及公眾假期' && eta == null):
                 return (
-                    <View style={{ paddingTop: '3%' }}>
-                        <Text style={styles.etaText}>
-                            <FontAwesomeIcon
-                                icon={faCircleExclamation}
-                                color={'#005eb2'}
-                                size={32} />
-                        </Text>
+                    <View style={styles.container}>
+                        <View style={styles.etaContainer}>
+                            <Text style={[styles.etaText, { marginRight: '30%' }]}>
+                                <FontAwesomeIcon
+                                    icon={faCircleExclamation}
+                                    color={'#005eb2'}
+                                    size={32} />
+                            </Text>
+                        </View>
+
+                        <View style={styles.routeDetailContainer}>
+                            <Text style={styles.infoText}>
+                                {weekendServiceInfo}
+                            </Text>
+                        </View>
                     </View>
                 )
                 break;
             case (eta !== null):
                 return (
-                    <View>
-                        <Text style={styles.etaText}>
-                            {etaMinutes(eta)}
-                        </Text>
-                        <Text style={styles.minText}>分鐘</Text>
+                    <View style={styles.container}>
+                        <View style={styles.etaContainer}>
+                            <Text style={styles.etaText}>
+                                {etaMinutes(eta)}
+                            </Text>
+                            <Text style={styles.minText}>分鐘</Text>
+                        </View>
+
+                        <View style={styles.routeDetailContainer}>
+                            <Text style={styles.infoText}>
+                                預定班次
+                            </Text>
+                        </View>
                     </View>
                 )
                 break;
             default:
                 return (
-                    <View>
-                        <Text style={styles.etaText}> - </Text>
-                        <Text style={styles.minText}>分鐘</Text>
+                    <View style={styles.container}>
+                        <View style={styles.etaContainer}>
+                            <Text style={styles.etaText}> - </Text>
+                            <Text style={styles.minText}>分鐘</Text>
+                        </View>
+
+                        <View style={styles.routeDetailContainer}>
+                            <Text style={styles.infoText}>
+                                未有資訊
+                            </Text>
+                        </View>
                     </View>
                 )
                 break;
@@ -93,25 +116,8 @@ const Item = ({ routeNum, dest, eta, rmk }) => {
     }
 
     return (
-        <View style={styles.container}>
-            <View style={styles.etaContainer}>
-                {isETA()}
-            </View>
-
-            <View style={styles.routeDetailContainer}>
-                <View style={styles.origContainer}>
-                    <Text style={{ textAlignVertical: 'bottom' }}>往</Text>
-                    <Text style={styles.origText}>
-                        {dest}
-                    </Text>
-                </View>
-
-                <View style={styles.stopContainer}>
-                    <Text style={styles.stopText}>
-                        
-                    </Text>
-                </View>
-            </View>
+        <View>
+            {isETA()}
         </View>
     )
 };
@@ -124,48 +130,33 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         height: 100,
     },
-    routeNumContainer: {
-        width: '20%',
-        justifyContent: 'center',
-    },
-    routeNumText: {
-        fontSize: 28,
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
     routeDetailContainer: {
-        width: '60%',
+        width: '70%',
         justifyContent: 'center',
         paddingLeft: '3%'
     },
-    origContainer: {
-        flexDirection: 'row',
-    },
-    origText: {
+    infoText: {
         fontSize: 25,
         fontWeight: 'bold'
     },
-    stopContainer: {
-        paddingTop: '2%'
-    },
-    stopText: {
-        fontSize: 15,
-        fontWeight: 'bold',
-    },
     etaContainer: {
-        width: '20%',
+        width: '30%',
+        paddingLeft: '8%',
         justifyContent: 'center',
+        flexDirection: 'row',
     },
     etaText: {
         fontSize: 30,
         fontWeight: 'bold',
         color: '#005eb2',
-        textAlign: 'right',
-        paddingRight: '10%',
+        alignSelf: 'center'
     },
     minText: {
         textAlign: 'right',
-        paddingRight: '10%',
+        paddingLeft: '5%',
+        alignSelf: 'center',
+        height: '35%',
+        textAlignVertical: 'bottom'
     }
 })
 

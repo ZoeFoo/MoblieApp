@@ -33,8 +33,8 @@ export default function RouteDetailScreen({ navigation, route }) {
             </View>}
 
             <ScrollView refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }>
+                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                }>
                 <View style={{ height: 300 }}>
                     <Map latitude={latitude} longitude={longitude} />
                 </View>
@@ -45,7 +45,7 @@ export default function RouteDetailScreen({ navigation, route }) {
                     </Text>
                 </View>
 
-                <View>
+                <View style={styles.itemContainer}>
                     <BusRoutesETAItem
                         routeNum={routeNum}
                         whichStop={whichStop}
@@ -80,4 +80,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         paddingLeft: '5%'
     },
+    itemContainer: {
+        minHeight: 480,
+    }
 })
